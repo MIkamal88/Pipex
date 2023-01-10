@@ -54,25 +54,17 @@
 int	main(int argc, char **argv, char **envp)
 {
 	pid_t	pid1;
-	// int		fd[2];
-	char *cmd = "/bin/ls";
+	char *cmd = "/usr/bin/ls";
 	char **args = malloc(sizeof(char *) * 2);
-
-	// args[0] = cmd;
-	// args[1] = NULL;
-	// if (argc != 5)
-	// 	printf("Error");
 	int infile = open("infile", O_WRONLY | O_RDONLY);
 	int outfile = open("outfile", O_WRONLY);
-	// if (pipe(fd) == -1)
-	// {
-	// 	printf("Error");
-	// 	return (1);
-	// }
+	args[0] = cmd;
+	args[1] = NULL;
+
 	pid1 = fork();
 	if (pid1 == 0)
 	{
-		dup2(infile , STDOUT_FILENO);
+		dup2(infile, STDOUT_FILENO);
 		close(infile);
 		close(outfile);
 		execve(cmd, args, NULL);
@@ -81,13 +73,13 @@ int	main(int argc, char **argv, char **envp)
 	char *out_cmd = "/usr/bin/wc";
 	char **args_out = malloc(sizeof(char *) *2);
 
-	args[0] = out_cmd;
-	args[1] = NULL;
+	args_out[0] = out_cmd;
+	args_out[1] = NULL;
 	pid1 = fork();
 	if (pid1 == 0)
 	{
-		dup2(infile , STDIN_FILENO);
-		dup2(outfile , STDOUT_FILENO);
+		dup2(infile, STDIN_FILENO);
+		dup2(outfile, STDOUT_FILENO);
 		close(infile);
 		close(outfile);
 		execve(out_cmd, args_out, NULL);

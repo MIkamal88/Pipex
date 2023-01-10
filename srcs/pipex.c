@@ -12,7 +12,7 @@
 
 #include "../includes/pipex.h"
 
-// ./pipex	file1	cmd1	cmd2	file2
+// ./pipex	infile	cmd1	cmd2	outfile
 //	argv[0]	argv[1]	argv[2]	argv[3]	argv[4]
 // fd[0] = read
 // fd[1] = write
@@ -20,31 +20,27 @@
 void	child_process(char **argv, int *fd, char **envp)
 {
 	int		filein;
-	char	*path;
 
 	filein = open(argv[1], O_RDONLY);
-	path = path_finder(argv[2], envp);
 	if (filein == -1)
 		printf("filein = -1");
-	dup2(fd[1], STDOUT_FILENO);
-	dup2(filein, STDIN_FILENO);
+	dup2(filein, STDIN_FILENO); // ??
+	dup2(fd[1], STDOUT_FILENO); // ??
 	close(fd[0]);
-	execve(path, argv[2], envp);
+	execute(argv[2], envp);
 }
 
 void	parent_process(char **argv, int *fd, char **envp)
 {
 	int		fileout;
-	char	*path;
 
-	fileout = open(argv[4], O_WRONLY);
-	path = path_finder(argv[3], envp);
+	fileout = open(argv[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fileout == -1)
 		printf("fileout = -1");
-	dup2(fd[0], STDIN_FILENO);
-	dup2(fileout, STDOUT_FILENO);
+	dup2(fileout, STDOUT_FILENO); // ??
+	dup2(fd[0], STDIN_FILENO); // ??
 	close(fd[1]);
-	execve(path, argv[4], envp);
+	execute(argv[3], envp);
 }
 
 int	main(int argc, char **argv, char **envp)

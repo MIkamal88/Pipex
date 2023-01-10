@@ -24,7 +24,7 @@ char	*path_finder(char *cmd, char **envp)
 	i = 0;
 	while (ft_strncmp("PATH", envp[i], 4))
 		i++;
-	paths = ft_split(envp[i + 5], ':');
+	paths = ft_split(envp[i] + 5, ':');
 	i = 0;
 	while (paths[i])
 	{
@@ -36,3 +36,33 @@ char	*path_finder(char *cmd, char **envp)
 	}
 	return (0);
 }
+
+void	execute(char *argv, char **envp)
+{
+	int		i;
+	char	*path;
+	char	**cmd;
+
+	i = -1;
+	cmd = ft_split(argv, ' ');
+	path = path_finder(cmd[0], envp);
+	if (!path)
+	{
+		while (cmd[++i])
+			free(cmd[i]);
+		free(cmd);
+		printf("Error");
+	}
+	if (execve(path, cmd, envp) == -1)
+		printf("Error");
+}
+
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	char *cmd;
+
+// 	scanf("%s", cmd);
+// 	char *path = path_finder(cmd, envp);
+
+// 	printf("%s", path);
+// }

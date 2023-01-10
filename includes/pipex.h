@@ -23,5 +23,6 @@
 
 // Main Functions
 char	*path_finder(char *cmd, char **envp);
+void	execute(char *argv, char **envp);
 
 #endif
