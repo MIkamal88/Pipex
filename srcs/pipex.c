@@ -6,7 +6,7 @@
 /*   By: mshehata <mshehata@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 16:11:02 by mshehata          #+#    #+#             */
-/*   Updated: 2023/01/09 16:11:03 by mshehata         ###   ########.fr       */
+/*   Updated: 2023/01/11 12:48:06 by mshehata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,28 +19,28 @@
 //execve(pathname, argv, envp)
 void	child_process(char **argv, int *fd, char **envp)
 {
-	int		filein;
+	int	filein;
 
 	filein = open(argv[1], O_RDONLY);
 	if (filein == -1)
-		printf("filein = -1");
-	dup2(filein, STDIN_FILENO); // ??
-	dup2(fd[1], STDOUT_FILENO); // ??
+		err_hndl("\033[31mError parsing Infile FD");
+	dup2(filein, STDIN_FILENO);
+	dup2(fd[1], STDOUT_FILENO);
 	close(fd[0]);
-	execute(argv[2], envp);
+	run_cmd(argv[2], envp);
 }
 
 void	parent_process(char **argv, int *fd, char **envp)
 {
-	int		fileout;
+	int	fileout;
 
-	fileout = open(argv[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
+	fileout = open(argv[4], O_WRONLY);
 	if (fileout == -1)
-		printf("fileout = -1");
-	dup2(fileout, STDOUT_FILENO); // ??
-	dup2(fd[0], STDIN_FILENO); // ??
+		err_hndl("\033[31mError parsing Outfile FD");
+	dup2(fileout, STDOUT_FILENO);
+	dup2(fd[0], STDIN_FILENO);
 	close(fd[1]);
-	execute(argv[3], envp);
+	run_cmd(argv[3], envp);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -49,18 +49,12 @@ int	main(int argc, char **argv, char **envp)
 	int		fd[2];
 
 	if (argc != 5)
-		printf("Error");
+		err_hndl("\033[31mInvalid Arguments");
 	if (pipe(fd) == -1)
-	{
-		printf("Error");
-		return (1);
-	}
+		err_hndl("\033[31mPipe failed");
 	pid1 = fork();
 	if (pid1 == -1)
-	{
-		printf("Error");
-		return (1);
-	}
+		err_hndl("\033[31mForking failed");
 	if (pid1 == 0)
 		child_process(argv, fd, envp);
 	waitpid(pid1, NULL, 0);

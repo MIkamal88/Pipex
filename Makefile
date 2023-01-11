@@ -5,42 +5,43 @@
 #                                                     +:+ +:+         +:+      #
 #    By: mshehata <mshehata@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/11/21 13:27:21 by mshehata          #+#    #+#              #
-#    Updated: 2023/01/11 14:40:38 by mshehata         ###   ########.fr        #
+#    Created: 2023/01/11 13:18:45 by mshehata          #+#    #+#              #
+#    Updated: 2023/01/11 15:35:10 by mshehata         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-Library = libft
+NAME = pipex
 
-PART1 =	ft_strlen.c ft_strchr.c\
-		ft_strncmp.c ft_strdup.c\
+LIBFT =	./Libft/ft_split.c\
+		./Libft/ft_strjoin.c\
+		./Libft/ft_strncmp.c\
+		./Libft/ft_strchr.c\
+		./Libft/ft_strlen.c\
+		./Libft/ft_substr.c\
+		./Libft/ft_strdup.c\
 
-PART2 =	ft_split.c ft_strjoin.c ft_substr.c\
+SRCS =	./srcs/utils.c\
+		./srcs/pipex.c\
+
+OFILES = $(LIBFT:.c=.o) $(SRCS:.c=.o)
 
 CC = gcc
 
-FLAGS = -Wall -Wextra -Werror -c
+FLAGS = -Wall -Wextra -Werror -g
 
-OUTN = $(Library).a
+RM = rm -f
 
-SRC = $(PART1) $(PART2)
-
-M_OFILES = $(SRC:.c=.o)
-
-NAME = $(OUTN)
+all :	$(NAME)
 
 $(NAME):
-		$(CC) $(FLAGS) $(SRC) -I./
-		ar -rc $(OUTN) $(M_OFILES)
-
-all: $(NAME)
+		$(CC) $(FLAGS) $(LIBFT) $(SRCS) -I./
 
 clean:
-	rm -f $(M_OFILES) $(B_OFILES)
+	$(RM) $(OFILES)
 
-fclean:	clean
-		rm -f $(NAME)
+fclean: clean
+	$(RM) $(NAME)
 
 re: fclean all
 
-.PHONY: clean fclean all re
+.PHONY: all clean fclean re

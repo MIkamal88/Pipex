@@ -6,13 +6,13 @@
 /*   By: mshehata <mshehata@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 11:58:50 by mshehata          #+#    #+#             */
-/*   Updated: 2023/01/09 09:36:24 by mshehata         ###   ########.fr       */
+/*   Updated: 2023/01/11 12:12:53 by mshehata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-/*function to find path inside the envp by checking each possible path
+/*Function to find path inside the envp by checking each possible path
 and return the correct path*/
 char	*path_finder(char *cmd, char **envp)
 {
@@ -37,7 +37,8 @@ char	*path_finder(char *cmd, char **envp)
 	return (0);
 }
 
-void	execute(char *argv, char **envp)
+/*Function to handle command arguments*/
+void	run_cmd(char *argv, char **envp)
 {
 	int		i;
 	char	*path;
@@ -51,10 +52,17 @@ void	execute(char *argv, char **envp)
 		while (cmd[++i])
 			free(cmd[i]);
 		free(cmd);
-		printf("Error");
+		err_hndl("Parsing Path failed");
 	}
 	if (execve(path, cmd, envp) == -1)
-		printf("Error");
+		err_hndl("Execve failed");
+}
+
+/*Error handling using perror*/
+void	err_hndl(char *err)
+{
+	perror(err);
+	exit(EXIT_FAILURE);
 }
 
 // int	main(int argc, char **argv, char **envp)
