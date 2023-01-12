@@ -34,8 +34,8 @@ RM = rm -f
 all :	$(NAME)
 
 $(NAME):	$(OFILES)
-			@echo "\033[0;32mCompiling pipex"
-			$(CC) $(FLAGS) $(OFILES) -o $(NAME)
+	@echo "\033[0;33mCompiling Pipex..."
+	$(CC) $(FLAGS) $(OFILES) -o $(NAME)
 
 clean:
 	@echo "\033[31mRemoving .o files"
