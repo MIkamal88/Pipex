@@ -23,7 +23,7 @@ void	child_process(char **argv, int *fd, char **envp)
 
 	filein = open(argv[1], O_RDONLY);
 	if (filein == -1)
-		err_hndl("\033[31mError parsing Infile FD");
+		err_hndl("Error parsing Infile FD");
 	dup2(filein, STDIN_FILENO);
 	dup2(fd[1], STDOUT_FILENO);
 	close(fd[0]);
@@ -36,7 +36,7 @@ void	parent_process(char **argv, int *fd, char **envp)
 
 	fileout = open(argv[4], O_WRONLY);
 	if (fileout == -1)
-		err_hndl("\033[31mError parsing Outfile FD");
+		err_hndl("Error parsing Outfile FD");
 	dup2(fileout, STDOUT_FILENO);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[1]);
@@ -49,12 +49,12 @@ int	main(int argc, char **argv, char **envp)
 	int		fd[2];
 
 	if (argc != 5)
-		err_hndl("\033[31mInvalid Arguments");
+		err_hndl("Invalid Arguments");
 	if (pipe(fd) == -1)
-		err_hndl("\033[31mPipe failed");
+		err_hndl("Pipe failed");
 	pid1 = fork();
 	if (pid1 == -1)
-		err_hndl("\033[31mForking failed");
+		err_hndl("Forking failed");
 	if (pid1 == 0)
 		child_process(argv, fd, envp);
 	waitpid(pid1, NULL, 0);

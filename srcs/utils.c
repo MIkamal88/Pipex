@@ -58,7 +58,7 @@ void	run_cmd(char *argv, char **envp)
 		err_hndl("Execve failed");
 }
 
-/*Error handling using perror*/
+/*Error handling using perror and exit failure*/
 void	err_hndl(char *err)
 {
 	perror(err);

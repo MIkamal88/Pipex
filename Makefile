@@ -23,7 +23,7 @@ LIBFT =	./Libft/ft_split.c\
 SRCS =	./srcs/utils.c\
 		./srcs/pipex.c\
 
-OFILES = $(LIBFT:.c=.o) $(SRCS:.c=.o)
+OFILES =	$(LIBFT:.c=.o) $(SRCS:.c=.o)
 
 CC = gcc
 
@@ -33,15 +33,20 @@ RM = rm -f
 
 all :	$(NAME)
 
-$(NAME):
-		$(CC) $(FLAGS) $(LIBFT) $(SRCS) -I./
+$(NAME):	$(OFILES)
+			@echo "\033[0;32mCompiling pipex"
+			$(CC) $(FLAGS) $(OFILES) -o $(NAME)
 
 clean:
-	$(RM) $(OFILES)
+	@echo "\033[31mRemoving .o files"
+	@$(RM) $(OFILES)
 
 fclean: clean
-	$(RM) $(NAME)
+	@echo "\033[31mRemoving pipex"
+	@$(RM) $(NAME)
 
 re: fclean all
+
+.SILENT: $(NAME) $(OFILES)
 
 .PHONY: all clean fclean re
