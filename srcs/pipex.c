@@ -6,7 +6,7 @@
 /*   By: mshehata <mshehata@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 16:11:02 by mshehata          #+#    #+#             */
-/*   Updated: 2023/01/11 12:48:06 by mshehata         ###   ########.fr       */
+/*   Updated: 2023/01/14 13:21:00 by mshehata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	child_process(char **argv, int *fd, char **envp)
 {
 	int	filein;
 
-	filein = open(argv[1], O_RDONLY);
+	filein = open(argv[1], O_RDONLY, 0777);
 	if (filein == -1)
 		err_hndl("Error parsing Infile FD");
 	dup2(filein, STDIN_FILENO);
@@ -34,7 +34,7 @@ void	parent_process(char **argv, int *fd, char **envp)
 {
 	int	fileout;
 
-	fileout = open(argv[4], O_WRONLY);
+	fileout = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (fileout == -1)
 		err_hndl("Error parsing Outfile FD");
 	dup2(fileout, STDOUT_FILENO);
@@ -57,7 +57,7 @@ int	main(int argc, char **argv, char **envp)
 		err_hndl("Forking failed");
 	if (pid1 == 0)
 		child_process(argv, fd, envp);
-	waitpid(pid1, NULL, 0);
 	parent_process(argv, fd, envp);
-	return (0);
+	waitpid(pid1, NULL, 0);
+	exit(EXIT_SUCCESS);
 }

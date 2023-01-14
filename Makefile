@@ -6,7 +6,7 @@
 #    By: mshehata <mshehata@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/11 13:18:45 by mshehata          #+#    #+#              #
-#    Updated: 2023/01/11 15:35:10 by mshehata         ###   ########.fr        #
+#    Updated: 2023/01/14 15:39:08 by mshehata         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,9 +33,11 @@ RM = rm -f
 
 all :	$(NAME)
 
-$(NAME):	$(OFILES)
-	@echo "\033[0;33mCompiling Pipex..."
+$(NAME):	ANNOUNCE $(OFILES)
 	$(CC) $(FLAGS) $(OFILES) -o $(NAME)
+
+ANNOUNCE:
+	@echo "\033[0;33mCompiling Pipex..."
 
 clean:
 	@echo "\033[31mRemoving .o files"
