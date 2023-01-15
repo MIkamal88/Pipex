@@ -6,7 +6,7 @@
 #    By: mshehata <mshehata@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/11 13:18:45 by mshehata          #+#    #+#              #
-#    Updated: 2023/01/14 15:39:08 by mshehata         ###   ########.fr        #
+#    Updated: 2023/01/14 18:10:29 by mshehata         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ OFILES =	$(LIBFT:.c=.o) $(SRCS:.c=.o)
 
 CC = gcc
 
-FLAGS = -Wall -Wextra -Werror -g
+FLAGS = -Wall -Wextra -Werror
 
 RM = rm -f
 
