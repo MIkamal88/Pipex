@@ -6,7 +6,7 @@
 #    By: m_kamal <m_kamal@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/11 13:18:45 by mshehata          #+#    #+#              #
-#    Updated: 2023/01/16 17:18:16 by m_kamal          ###   ########.fr        #
+#    Updated: 2023/01/16 17:18:58 by m_kamal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,6 @@ fclean: clean
 
 re: fclean all
 
-#.SILENT: $(NAME) $(OFILES)
+.SILENT: $(NAME) $(OFILES)
 
 .PHONY: all clean fclean re
